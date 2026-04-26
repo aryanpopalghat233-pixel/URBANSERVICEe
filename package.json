@@ -1,0 +1,21 @@
+{
+  "name": "service-pros-marketplace",
+  "version": "1.0.0",
+  "description": "A modern home services marketplace landing page inspired by Urban Company.",
+  "main": "index.html",
+  "scripts": {
+    "start": "browser-sync start --server --files '*.html, *.css, *.js'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "marketplace",
+    "home-services",
+    "frontend",
+    "ui-ux"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^3.0.0"
+  }
+}
