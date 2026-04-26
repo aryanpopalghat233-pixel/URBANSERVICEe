@@ -1,23 +1,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
 
 const app = express();
+const PORT = 5000;
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
 // --- MongoDB Connection ---
-const uri = process.env.MONGO_URI;
-mongoose.connect(uri)
+// Hardcoded URI as requested
+const mongoURI = "mongodb+srv://aryanpopalghat233:aryan233@cluster0.i90bzje.mongodb.net/?appName=Cluster0";
+
+mongoose.connect(mongoURI)
     .then(() => console.log("✅ MongoDB connected successfully"))
     .catch(err => console.log("❌ MongoDB connection error:", err));
 
 // --- Database Schemas ---
 
-// 1. Service Schema (What you offer)
+// 1. Service Schema (For browsing available services)
 const serviceSchema = new mongoose.Schema({
     name: String,
     category: String,
@@ -28,7 +30,7 @@ const serviceSchema = new mongoose.Schema({
 
 const Service = mongoose.model('Service', serviceSchema);
 
-// 2. Booking Schema (When a user clicks "Book Now")
+// 2. Booking Schema (For when a user clicks 'Book Now')
 const bookingSchema = new mongoose.Schema({
     serviceName: String,
     customerName: String,
@@ -41,34 +43,38 @@ const Booking = mongoose.model('Booking', bookingSchema);
 
 // --- API Routes ---
 
-// GET: Fetch all services from DB
+// Welcome Route
+app.get('/', (req, res) => {
+    res.send('Service Marketplace API is running...');
+});
+
+// GET: Fetch all services from the database
 app.get('/api/services', async (req, res) => {
     try {
         const services = await Service.find();
         res.json(services);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ error: "Could not fetch services" });
     }
 });
 
 // POST: Create a new booking
 app.post('/api/book', async (req, res) => {
-    const newBooking = new Booking({
-        serviceName: req.body.serviceName,
-        customerName: req.body.customerName,
-        address: req.body.address
-    });
-
     try {
+        const newBooking = new Booking({
+            serviceName: req.body.serviceName,
+            customerName: req.body.customerName || "Guest User",
+            address: req.body.address || "No address provided"
+        });
+
         const savedBooking = await newBooking.save();
-        res.status(201).json(savedBooking);
+        res.status(201).json({ message: "Booking successful!", data: savedBooking });
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ error: "Booking failed", details: err.message });
     }
 });
 
-// Start Server
-const PORT = process.env.PORT || 5000;
+// Start the Server
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server is live at http://localhost:${PORT}`);
 });
