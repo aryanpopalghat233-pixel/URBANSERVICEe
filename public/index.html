@@ -736,39 +736,6 @@
         </div>
     </footer>
 
-    <script>
-        // Sticky Header Shadow on Scroll
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 10) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Simple Search Logic
-        function handleSearch() {
-            const input = document.getElementById('searchInput').value;
-            const location = document.getElementById('location').options[document.getElementById('location').selectedIndex].text;
-            
-            if(input.trim() === '') {
-                alert(`Please enter a service to search in ${location}.`);
-            } else {
-                alert(`Searching for '${input}' in ${location}... \n(This would route to a search results page)`);
-            }
-        }
-
-        // Category Selection
-        function selectService(categoryName) {
-            document.getElementById('searchInput').value = categoryName;
-            document.getElementById('searchInput').focus();
-        }
-
-        // Book Button Actions
-        function bookService(serviceName) {
-            alert(`Opening booking flow for: ${serviceName}\n(This would open a modal to select a time slot)`);
-        }
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
