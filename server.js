@@ -1,17 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-app.use(express.static('public'));
-
 const app = express();
-const PORT = 5000;
+const cors = require('cors');
 
-// Middleware
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
-// --- MongoDB Connection ---
-// Hardcoded URI as requested
+app.use(express.static('public')); 
+
 const mongoURI = "mongodb+srv://aryanpopalghat233:aryan233@cluster0.i90bzje.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(mongoURI)
