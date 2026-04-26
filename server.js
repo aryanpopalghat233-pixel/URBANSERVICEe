@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+app.use(express.static('public'));
 
 const app = express();
 const PORT = 5000;
