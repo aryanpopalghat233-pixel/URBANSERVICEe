@@ -1,8 +1,3 @@
-/**
- * ServicePros - Main JavaScript File
- */
-
-// --- Sticky Header Shadow on Scroll ---
 window.addEventListener('scroll', () => {
     const header = document.getElementById('header');
     // Add the 'scrolled' class when the page is scrolled down more than 10 pixels
@@ -20,8 +15,28 @@ function handleSearch() {
     const location = locationSelect.options[locationSelect.selectedIndex].text;
     
     if (input.trim() === '') {
-        alert(`Please enter a service to search in ${location}.`);
-    } else {
+     // In script.js
+async function bookService(serviceName) {
+    const bookingData = {
+        serviceName: serviceName,
+        customerName: "Guest User", // You'd normally get this from a login form
+        address: "123 Main St, New York"
+    };
+
+    try {
+        const response = await fetch('http://localhost:5000/api/book', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bookingData)
+        });
+
+        if (response.ok) {
+            alert(`Success! Your booking for ${serviceName} is saved in MongoDB.`);
+        }
+    } catch (error) {
+        console.error("Error booking service:", error);
+    }
+} else {
         // In a real application, this would redirect to a search results page
         // e.g., window.location.href = `/search?q=${input}&loc=${locationSelect.value}`;
         alert(`Searching for '${input}' in ${location}...\n(This would route to a search results page)`);
